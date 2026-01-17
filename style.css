@@ -1,0 +1,1344 @@
+/* Reset Dasar */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+body, html {
+    height: 100%;
+    overflow: hidden;
+}
+
+/* --- ANIMASI TRANSISI --- */
+
+.fade-out {
+    animation: fadeOut 0.6s ease-in-out forwards;
+}
+
+.fade-in {
+    animation: fadeIn 0.8s ease-out forwards;
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+        transform: scale(1);
+    }
+    to {
+        opacity: 0;
+        transform: scale(1.05); /* Sedikit membesar saat hilang */
+        visibility: hidden;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95); /* Sedikit mengecil saat muncul */
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Background Umum */
+.screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-image: url('images/Wallpaper.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    transition: all 0.5s ease;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* --- LAYAR START --- */
+.login-container {
+    margin: auto;
+    text-align: center;
+    color: #333;
+}
+
+.profile-pic {
+    width: 120px;
+    height: 120px;
+    background: #ccc;
+    border-radius: 50%;
+    margin: 0 auto 20px;
+    overflow: hidden;
+    border: 3px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+}
+
+.profile-pic img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+#start-btn {
+    margin-top: 20px;
+    padding: 10px 25px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(5px);
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.3s;
+    box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+}
+
+#start-btn:hover {
+    background: rgba(255, 255, 255, 0.4);
+}
+
+/* --- MENU UTAMA / TOP BAR --- */
+.top-bar {
+    height: 30px;
+    background: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 15px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #000;
+    box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+    z-index: 100;
+}
+
+.left-section, .right-section {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.apple-logo {
+    width: 15px;
+    height: 15px;
+    background-color: #333; /* Pengganti logo persegi panjang kecil */
+    border-radius: 2px;
+}
+
+.bold {
+    font-weight: 700;
+}
+
+/* --- DOCK --- */
+.dock-container {
+    position: absolute;
+    bottom: 15px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    z-index: 9999 !important;
+    pointer-events: none;
+}
+
+.dock {
+    pointer-events: auto;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(15px);
+    padding: 10px 20px;
+    border-radius: 20px;
+    display: flex;
+    gap: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.app-icon {
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.app-icon:hover {
+    transform: scale(1.2) translateY(-5px);
+}
+
+.app-icon img {
+    width: 100%;
+}
+
+.uns-logo-img {
+    width: 18px;    
+    height: 18px;   
+    cursor: pointer;
+    margin-right: 1px; 
+    transition: opacity 0.2s;
+}
+
+.uns-logo-img:hover {
+    opacity: 0.6;
+}
+/* --- JENDELA (WINDOW) --- */
+.window {
+    position: absolute;
+    
+    width: 600px;
+    height: 400px;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(15px);
+    border-radius: 12px;
+    display: flex;
+    opacity: 0;
+    pointer-events: none;
+    flex-direction: column;
+    overflow: hidden;
+    z-index: 10;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+    transform: scale(0.8);
+    transition: all 0.3s ease;
+    
+    /* Transisi untuk animasi smooth */
+    transition: 
+        width 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), 
+        height 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), 
+        top 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), 
+        left 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), 
+        transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), 
+        opacity 0.4s ease,
+        border-radius 0.5s ease;
+}
+
+.window-header {
+    height: 40px;
+    background: rgba(0, 0, 0, 0.05);
+    display: flex;
+    align-items: center;
+    padding: 0 15px;
+    position: relative;
+    cursor: grab;
+    user-select: none;
+}
+
+.window-header:active {
+    cursor: grabbing;
+}
+
+.traffic-lights {
+    display: flex;
+    gap: 8px;
+}
+
+.dot {
+    width: 12px; height: 12px;
+    border-radius: 200%;
+    cursor: pointer;
+}
+
+.red { background: #ff5f56; }
+.yellow { background: #ffbd2e; }
+.green { background: #27c93f; }
+
+.window.visible {
+    opacity: 1;
+    pointer-events: auto;
+    transform: scale(1);
+}
+
+.window-title {
+    position: absolute;
+    left: 50%; transform: translateX(-50%);
+    font-size: 13px; font-weight: bold; color: #555;
+}
+
+.window-content {
+    padding: 20px;
+    color: #333;
+    flex-grow: 1;
+    overflow-y: auto; /* Mengaktifkan scroll vertikal */
+    height: 100%;
+}
+
+.window.maximized {
+    top: 30px !important;
+    left: 0 !important;
+    transform: translate(0, 0) scale(1) !important;
+    width: 100% !important;
+    height: calc(100vh - 30px) !important; /* Sisakan ruang untuk dock */
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.window.minimized {
+    top: 100% !important;
+    left: 50% !important;
+    width: 80px !important;
+    height: 40px !important;
+    transform: translate(-50%, 0) scale(0) !important;
+    opacity: 0 !important;
+    pointer-events: none;
+}
+
+/* Styling Khusus Safari */
+.safari-bg {
+    background-color: white !important;
+    padding: 0 !important;
+}
+
+.safari-address-bar-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 0 60px 0 10px;
+    gap: 15px;
+}
+
+.safari-controls {
+    display: flex;
+    gap: 10px;
+    color: #888;
+    font-size: 18px;
+    cursor: default;
+}
+
+.safari-address-bar {
+    background: rgba(0,0,0,0.05);
+    flex-grow: 1;
+    height: 24px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    font-size: 11px;
+    color: #555;
+}
+
+/* Google Home View */
+.google-home {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 60px;
+}
+
+.google-logo-text {
+    font-size: 60px;
+    font-family: 'Product Sans', Arial, sans-serif;
+    margin-bottom: 20px;
+    font-weight: 500;
+}
+
+.google-logo-text span:nth-child(1) { color: #4285F4; }
+.google-logo-text span:nth-child(2) { color: #EA4335; }
+.google-logo-text span:nth-child(3) { color: #FBBC05; }
+.google-logo-text span:nth-child(4) { color: #4285F4; }
+.google-logo-text span:nth-child(5) { color: #34A853; }
+.google-logo-text span:nth-child(6) { color: #EA4335; }
+
+.google-search-box {
+    width: 80%;
+    max-width: 450px;
+    height: 40px;
+    border: 1px solid #dfe1e5;
+    border-radius: 24px;
+    display: flex;
+    align-items: center;
+    padding: 0 15px;
+    transition: box-shadow 0.2s;
+}
+
+.google-search-box:hover {
+    box-shadow: 0 1px 6px rgba(32,33,36,.28);
+}
+
+.google-search-box input {
+    flex: 1;
+    border: none;
+    outline: none;
+    padding: 0 10px;
+    font-size: 14px;
+}
+
+.search-icon, .mic-icon {
+    width: 18px;
+    opacity: 0.4;
+}
+
+/* Google Results View */
+.google-results {
+    padding: 20px;
+    text-align: left;
+}
+
+.results-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 10px;
+}
+
+.results-logo {
+    font-weight: bold;
+    color: #4285F4;
+    font-size: 18px;
+}
+
+.results-search-box input {
+    width: 300px;
+    padding: 8px 15px;
+    border-radius: 20px;
+    border: 1px solid #dfe1e5;
+    outline: none;
+}
+
+.results-divider {
+    border: 0;
+    border-top: 1px solid #ebebeb;
+    margin: 10px -20px 20px -20px;
+}
+
+.results-stats {
+    font-size: 13px;
+    color: #70757a;
+    margin-top: 15px;
+    margin-bottom: 20px;
+}
+
+.result-item {
+    margin-bottom: 25px;
+    max-width: 500px;
+}
+
+.result-item cite {
+    font-size: 12px;
+    color: #202124;
+    font-style: normal;
+    display: block;
+}
+
+.result-item h3 {
+    color: #1a0dab;
+    font-size: 18px;
+    font-weight: 400;
+    margin: 4px 0;
+    cursor: pointer;
+}
+
+.result-item h3:hover { text-decoration: underline; }
+
+.result-item p {
+    font-size: 13px;
+    color: #4d5156;
+    line-height: 1.4;
+}
+
+/* Styling Tab Navigasi Google */
+.google-nav-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 25px;
+    font-size: 14px;
+    color: #5f6368;
+}
+
+.nav-tab {
+    cursor: pointer;
+    padding-bottom: 5px;
+    border-bottom: 3px solid transparent;
+    transition: color 0.2s, border-bottom 0.2s;
+}
+
+.nav-tab:hover {
+    color: #1a73e8;
+}
+
+.nav-tab.active {
+    color: #1a73e8;
+    border-bottom: 3px solid #1a73e8;
+}
+
+/* Penyesuaian khusus untuk halaman hasil (Result Page) */
+.results-tabs {
+    justify-content: flex-start;
+    padding-left: 105px; /* Menyelaraskan dengan logo Google di atasnya */
+    margin-top: 15px;
+    margin-bottom: 0;
+    font-size: 13px;
+}
+
+.results-tabs .nav-tab {
+    padding-bottom: 10px;
+}
+
+/* Perbaikan visual Divider */
+.results-divider {
+    border: 0;
+    border-top: 1px solid #ebebeb;
+    margin: 0 !important; /* Menempel dengan tab navigasi */
+    width: 100%;
+}
+
+/* Memastikan konten tetap putih */
+.safari-bg {
+    background-color: #ffffff !important;
+}
+
+/* Layout Galeri Gambar */
+.results-images-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 15px;
+    padding: 20px;
+}
+
+.image-card {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #ddd;
+    background: #f8f9fa;
+    transition: transform 0.2s;
+    cursor: pointer;
+}
+
+.image-card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.image-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Utilitas */
+.hidden {
+    display: none !important;
+}
+
+/* Meta Container (Favicon + URL) */
+.result-meta-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 5px;
+}
+
+.favicon-circle {
+    width: 26px;
+    height: 26px;
+    background-color: #f1f3f4;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(0,0,0,0.05);
+}
+
+.favicon-circle img {
+    width: 16px;
+    height: 16px;
+    border-radius: 2px;
+}
+
+.site-path {
+    display: flex;
+    flex-direction: column;
+}
+
+.site-name {
+    font-size: 14px;
+    color: #202124;
+    line-height: 1.2;
+}
+
+.result-item cite {
+    font-size: 12px;
+    color: #4d5156;
+}
+
+/* --- PENYESUAIAN MAXIMISED --- */
+.window.maximized .favicon-circle {
+    width: 32px;
+    height: 32px;
+}
+
+.window.maximized .favicon-circle img {
+    width: 20px;
+    height: 20px;
+}
+
+.window.maximized .site-name {
+    font-size: 16px;
+}
+
+/* Layout Flex untuk Hasil + Knowledge Panel */
+.results-flex-container {
+    display: flex;
+    justify-content: flex-start;
+    padding-bottom: 50px;
+}
+
+/* KNOWLEDGE PANEL STYLING */
+.knowledge-panel {
+    display: none; /* Sembunyikan secara default */
+    width: 360px;
+    border: 1px solid #dfe1e5;
+    border-radius: 8px;
+    margin-left: 60px;
+    margin-top: 20px;
+    overflow: hidden;
+    height: fit-content;
+}
+
+.kp-image-header {
+    width: 100%;
+    height: 180px;
+    background: #f8f9fa;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px solid #dfe1e5;
+}
+
+.kp-image-header img {
+    height: 80%;
+    object-fit: contain;
+}
+
+.kp-content {
+    padding: 15px;
+}
+
+.kp-title {
+    font-size: 24px;
+    font-weight: 400;
+    margin-bottom: 2px;
+}
+
+.kp-subtitle {
+    font-size: 14px;
+    color: #70757a;
+    margin-bottom: 15px;
+}
+
+.kp-divider {
+    border: 0;
+    border-top: 1px solid #ebebeb;
+    margin-bottom: 15px;
+}
+
+.kp-description {
+    font-size: 14px;
+    line-height: 1.58;
+    color: #202124;
+    margin-bottom: 20px;
+}
+
+.kp-info-row {
+    font-size: 13px;
+    margin-bottom: 8px;
+    color: #202124;
+}
+
+/* --- LOGIKA SAAT WINDOW MAXIMIZED --- */
+
+.window.maximized .knowledge-panel {
+    display: block; /* Munculkan panel saat layar penuh */
+}
+
+.window.maximized .results-flex-container {
+    padding-right: 40px; /* Memberi ruang di sisi kanan */
+}
+
+.window.maximized .results-list {
+    flex: 0 0 700px; /* Kunci lebar hasil pencarian agar panel tidak terdorong jauh */
+}
+
+.window.maximized .detail-header {
+    padding-top: 40px; /* Jarak lebih luas saat layar penuh */
+    padding-left: 40px;
+    padding-right: 40px;
+}
+
+.window.maximized .uns-sections-container {
+    padding-top: 50px; /* Jarak atas kartu saat layar penuh */
+    gap: 30px;
+}
+
+/* Styling Kotak Deskripsi pada Tab Images */
+.images-description-box {
+    margin: 20px;
+    padding: 25px;
+    background-color: #ffffff;
+    border: 1px solid #dfe1e5;
+    border-radius: 12px;
+    box-shadow: 0 1px 6px rgba(32,33,36,0.1);
+    color: #3c4043;
+    transition: all 0.3s ease;
+}
+
+.images-description-box h3 {
+    color: #1a73e8;
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
+.images-description-box h4 {
+    margin: 15px 0 8px 0;
+    font-size: 15px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 5px;
+}
+
+.images-description-box p, .images-description-box li {
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.images-description-box ul {
+    padding-left: 20px;
+}
+
+.desc-grid {
+    display: flex;
+    gap: 40px;
+    margin-top: 10px;
+}
+
+/* --- PENYESUAIAN SAAT MAXIMIZED --- */
+
+.window.maximized .images-description-box {
+    margin: 40px 175px; /* Menyelaraskan dengan indentasi hasil pencarian */
+    padding: 40px;
+    border-width: 2px;
+}
+
+.window.maximized .images-description-box h3 {
+    font-size: 28px;
+}
+
+.window.maximized .images-description-box h4 {
+    font-size: 20px;
+}
+
+.window.maximized .images-description-box p, 
+.window.maximized .images-description-box li {
+    font-size: 16px;
+}
+
+.window.maximized .desc-grid {
+    gap: 100px; /* Jarak antar kolom lebih lebar saat fullscreen */
+}
+
+/* --- PENYESUAIAN GRID GAMBAR SAAT MAXIMIZED --- */
+
+.window.maximized .results-images-grid {
+    display: flex !important;           /* Mengubah grid menjadi flex untuk kontrol posisi lebih mudah */
+    justify-content: center !important;  /* Memaksa konten gambar ke tengah secara horizontal */
+    flex-wrap: wrap !important;          /* Memungkinkan gambar turun ke baris baru jika layar sempit */
+    gap: 25px !important;                /* Memberi jarak antar gambar yang lebih lebar */
+    padding: 40px 0 !important;          /* Memberi ruang atas dan bawah */
+    width: 100% !important;
+}
+
+.window.maximized .image-card {
+    flex: 0 0 180px !important;          /* Memperbesar ukuran gambar saat layar penuh */
+    height: 180px !important;
+}
+
+/* Menyesuaikan kotak deskripsi agar tetap simetris dengan gambar yang sudah di tengah */
+.window.maximized .images-description-box {
+    margin: 20px auto 50px auto !important; /* Membuat kotak berada di tengah (auto margin) */
+    max-width: 1100px !important;            /* Membatasi lebar agar tidak terlalu melar ke samping */
+    padding: 40px !important;
+}
+
+/* --- PENYESUAIAN SAAT WINDOW MAXIMIZED --- */
+
+/* 1. Memperbesar Teks Google di Pojok Kiri (Halaman Hasil) */
+.window.maximized .results-logo {
+    font-size: 32px; /* Lebih besar dari sebelumnya */
+    margin-right: 20px;
+    font-weight: 500;
+}
+
+/* 2. Memperlebar dan Menggeser Searchbar ke Kanan */
+.window.maximized .results-search-box {
+    margin-left: 20px; /* Memberi jarak tambahan dari logo */
+}
+
+.window.maximized .results-search-box input {
+    width: 650px; /* Sangat lebar saat maximized */
+    height: 50px;
+    font-size: 16px;
+    padding-left: 25px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* 3. Menyesuaikan Tab Navigasi (All, Images, Maps) agar Sejajar */
+.window.maximized .results-tabs {
+    padding-left: 175px; /* Digeser agar lurus dengan searchbar di atasnya */
+    gap: 35px;
+    font-size: 16px;
+}
+
+.window.maximized .results-tabs .nav-tab {
+    padding-bottom: 12px;
+}
+
+/* 4. Memperluas Area Hasil List agar Tidak Terlalu di Kiri */
+.window.maximized .results-list {
+    padding-left: 175px; /* Menyelaraskan teks deskripsi dengan searchbar */
+}
+
+.window.maximized .results-stats {
+    margin-top: 20px;    /* Jarak atas lebih besar saat layar penuh */
+    margin-bottom: 25px; 
+    padding-left: 0;     /* Pastikan tidak ada padding tambahan jika sudah diatur di parent */
+}
+
+.window.maximized .result-item {
+    max-width: 750px;
+    margin-bottom: 40px;
+}
+
+/* --- STYLING KHUSUS ABOUT UNS --- */
+.uns-content-wrapper {
+    background-color: #f5f5f7;
+    padding: 0 !important;
+}
+
+.uns-hero {
+    position: relative;
+    width: 100%;
+    height: 180px;
+    overflow: hidden;
+}
+
+.hero-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.7);
+}
+
+.hero-overlay {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    color: white;
+}
+
+.hero-overlay h1 { font-size: 22px; }
+.hero-overlay p { font-size: 12px; opacity: 0.9; }
+
+.uns-sections-container {
+    /* Ubah padding atas (nilai pertama) menjadi lebih besar, misal 30px */
+    padding: 30px 15px 15px 15px; 
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.uns-info-card {
+    background: white;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    border: 1px solid #e0e0e0;
+    transition: transform 0.2s;
+}
+
+.uns-info-card:hover {
+    transform: translateY(-2px);
+}
+
+.uns-info-card h3 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 15px;
+    color: #0066cc;
+    margin-bottom: 10px;
+}
+
+.uns-info-card p, .uns-info-card li {
+    font-size: 13px;
+    color: #444;
+    line-height: 1.5;
+}
+
+.admission-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.admission-item {
+    background: #eef6ff;
+    padding: 8px;
+    border-radius: 6px;
+    font-size: 11px;
+    text-align: center;
+    color: #0056b3;
+    font-weight: 600;
+}
+
+.faculty-tag-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.faculty-tag {
+    background: #f0f0f0;
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 11px;
+    color: #666;
+}
+
+.facilities-list {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5px;
+}
+
+/* --- PERBAIKAN TAMPILAN UNS (NORMAL & MAXIMIZED) --- */
+
+/* Menjaga agar container tidak terlalu melar ke samping saat fullscreen */
+.uns-sections-container {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 900px; /* Membatasi lebar agar tetap rapi di tengah */
+    margin: 0 auto;
+}
+
+/* Override: Hapus scaling teks yang berlebihan saat maximized */
+.window.maximized .uns-sections-container {
+    padding: 40px 20px;
+    gap: 20px;
+}
+
+.window.maximized .uns-info-card h3 {
+    font-size: 18px; /* Ukuran tetap proporsional */
+}
+
+.window.maximized .uns-info-card p, 
+.window.maximized .uns-info-card li {
+    font-size: 14px;
+}
+
+/* --- STYLING KOTAK DETAIL (ELEGANT BOX) --- */
+.detail-body-container {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+.elegant-box {
+    background: white;
+    width: 100%;
+    max-width: 700px; /* Lebar maksimal kotak detail */
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    border: 1px solid rgba(0,0,0,0.05);
+    line-height: 1.6;
+}
+
+.elegant-box h4 {
+    color: #007aff;
+    font-size: 18px;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #f0f0f0;
+    padding-bottom: 8px;
+}
+
+/* Penyesuaian Back Button agar lebih macOS-style */
+.back-btn {
+    background: rgba(0,0,0,0.05);
+    border: none;
+    padding: 6px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 12px;
+    transition: all 0.2s;
+}
+
+.back-btn:hover {
+    background: #e5e5e5;
+}
+
+/* Menyesuaikan video hero agar tidak terlalu tinggi saat maximized */
+.window.maximized .uns-hero {
+    height: 300px; 
+}
+
+/* --- INTERAKTIF & VIDEO STYLE --- */
+.video-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background: #000;
+}
+
+.video-container iframe {
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* Supaya klik tidak mengganggu drag jendela */
+}
+
+/* Animasi Kartu */
+.uns-info-card {
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    /* Ubah dari 100px menjadi min-height atau auto agar lebih fleksibel */
+    min-height: 100px; 
+    height: auto; 
+    max-height: 120px; /* Batas normal sedikit lebih lega */
+}
+
+/* Di dalam section .window.maximized */
+.window.maximized .uns-info-card {
+    padding: 30px;
+    border-radius: 20px;
+    max-height: none; /* MENGHAPUS BATASAN TINGGI SAAT FULLSCREEN */
+    height: auto;     /* Mengikuti isi konten */
+}
+
+.uns-info-card.expanded {
+    max-height: 600px; /* Tinggi saat terbuka */
+    border-color: #4a90e2;
+    background: #fdfdfd;
+}
+
+.card-detail {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+    padding-top: 10px;
+}
+
+.expanded .card-detail {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.click-hint {
+    font-size: 10px;
+    color: #4a90e2;
+    font-weight: bold;
+    text-transform: uppercase;
+    display: block;
+    margin-top: 5px;
+}
+
+.admission-list {
+    list-style: none;
+    padding: 0;
+    font-size: 12px;
+}
+
+.admission-list li {
+    margin-bottom: 8px;
+    padding-left: 15px;
+    position: relative;
+}
+
+.admission-list li::before {
+    content: "•";
+    color: #4a90e2;
+    position: absolute;
+    left: 0;
+}
+
+/* Maximized Video Adjustments */
+.window.maximized .uns-hero {
+    height: 450px;
+}
+
+.window.maximized .click-hint {
+    font-size: 14px;
+}
+
+.window.maximized .admission-list {
+    font-size: 16px;
+}
+
+/* --- SEARCH INTERNAL STYLE --- */
+.faculty-search-container {
+    position: relative;
+    margin-top: 15px;
+    width: 100%;
+}
+
+#faculty-search-input {
+    width: 100%;
+    padding: 10px 40px 10px 15px;
+    border-radius: 8px;
+    border: 1px solid #dfe1e5;
+    background: #f8f9fa;
+    font-size: 13px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+#faculty-search-input:focus {
+    border-color: #4a90e2;
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
+}
+
+.inner-search-icon {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 18px;
+    opacity: 0.5;
+}
+
+.search-stats {
+    font-size: 11px;
+    color: #888;
+    margin-bottom: 10px;
+}
+
+.no-result-msg {
+    font-size: 12px;
+    color: #ea4335;
+    padding: 10px;
+    text-align: center;
+    width: 100%;
+}
+
+/* Penyesuaian saat Maximized */
+.window.maximized #faculty-search-input {
+    padding: 15px 50px 15px 20px;
+    font-size: 18px;
+}
+
+.window.maximized .search-stats {
+    font-size: 16px;
+}
+
+/* --- DETAIL PAGE STYLE --- */
+.click-hint-btn {
+    font-size: 11px;
+    color: #007aff;
+    font-weight: 600;
+    cursor: pointer;
+    text-transform: uppercase;
+    display: inline-block;
+    margin-top: 10px;
+    transition: opacity 0.2s;
+}
+
+.click-hint-btn:hover { opacity: 0.7; text-decoration: underline; }
+
+#uns-detail-view {
+    background: white;
+    min-height: 100%;
+    position: absolute;
+    top: 0; left: 0; width: 100%;
+    z-index: 100;
+    padding: 20px;
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from { transform: translateX(100%); }
+    to { transform: translateX(0); }
+}
+
+.detail-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 25px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 15px;
+    /* TAMBAHKAN INI */
+    padding-top: 20px; 
+}
+
+.back-btn {
+    background: #f0f0f0;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.detail-body {
+    line-height: 1.6;
+    color: #333;
+}
+
+.detail-body h4 { color: #007aff; margin: 20px 0 10px; }
+
+.ranking-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    background: #f9f9f9;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    font-size: 13px;
+}
+
+/* Maximized detail adjustment */
+.window.maximized .detail-body { font-size: 18px; padding: 20px 100px; }
+
+/* --- ANIMASI SLIDE DETAIL --- */
+
+#uns-detail-view {
+    position: absolute;
+    top: 0; 
+    left: 0; 
+    width: 100%;
+    height: 100%;
+    background: #f5f5f7; /* Background abu-abu terang khas macOS */
+    z-index: 100;
+    padding: 0;
+    overflow-y: auto;
+    
+    /* State awal: berada di kanan dan transparan */
+    opacity: 0;
+    transform: translateX(50px); 
+    pointer-events: none;
+    transition: 
+        transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), 
+        opacity 0.4s ease;
+}
+
+/* State ketika aktif (muncul) */
+#uns-detail-view.active {
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: auto;
+}
+
+/* Container elegan untuk isi konten */
+.detail-body-container {
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    animation: fadeInContent 0.8s ease;
+}
+
+@keyframes fadeInContent {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.elegant-box {
+    background: white;
+    width: 100%;
+    max-width: 750px;
+    padding: 40px;
+    border-radius: 18px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.06);
+    border: 1px solid rgba(0,0,0,0.03);
+}
+
+.elegant-box h4 {
+    color: #007aff;
+    font-size: 1.2rem;
+    margin: 25px 0 15px 0;
+    border-bottom: 1px solid #f0f0f2;
+    padding-bottom: 10px;
+}
+
+/* Pastikan tag fakultas memberikan indikasi bisa diklik */
+.faculty-tag {
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
+}
+
+.faculty-tag:hover {
+    background: #d0e7ff !important;
+    border-color: #4a90e2;
+    transform: translateY(-2px);
+}
+
+/* Kotak Elegan untuk Detail */
+.elegant-box {
+    background: white;
+    width: 100%;
+    max-width: 700px;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+    border: 1px solid rgba(0,0,0,0.05);
+    margin: 0 auto; /* Tengah secara horizontal */
+}
+
+/* Jarak aman atas agar tidak menempel di header */
+.detail-body-container {
+    padding: 40px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Mulai dari atas dengan padding */
+    min-height: calc(100% - 80px);
+}
+
+/* Penyesuaian khusus saat MAXIMIZED agar teks tidak melar */
+.window.maximized .elegant-box {
+    max-width: 850px;
+    padding: 60px;
+}
+
+.window.maximized .detail-body-container {
+    padding-top: 60px; /* Jarak lebih luas saat fullscreen */
+}
+
+/* Gaya teks deskripsi prodi */
+.elegant-box h4 {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 12px;
+}
+
+.elegant-box p {
+    line-height: 1.7;
+}
+
+.video-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background: #000;
+    overflow: hidden;
+}
+
+.video-container video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Memastikan video memenuhi container tanpa distorsi */
+    pointer-events: none; /* Agar tidak mengganggu fitur drag jendela */
+}
